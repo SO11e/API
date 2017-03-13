@@ -1,0 +1,24 @@
+{
+  "name": "zb_api",
+  "version": "1.0.0",
+  "description": "ZB_API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SO11e/ZB_API.git"
+  },
+  "author": "Groep E",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SO11e/ZB_API/issues"
+  },
+  "homepage": "https://github.com/SO11e/ZB_API#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "mongoose": "^4.8.7"
+  }
+}
