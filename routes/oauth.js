@@ -7,6 +7,16 @@ module.exports = function(app, passport) {
 		res.render('index.ejs');
 	});
 
+/**
+ * @swagger
+ * /profile:
+ *   get:
+ *     tags:
+ *       - Profile
+ *     description: Returns the profile page
+ *     produces:
+ *       - html
+ */
 	// PROFILE SECTION =========================
 	app.get('/profile', isLoggedIn, function(req, res) {
 		res.render('profile.ejs', {
@@ -14,11 +24,23 @@ module.exports = function(app, passport) {
 		});
 	});
 
+/**
+ * @swagger
+ * /logout:
+ *   get:
+ *     tags:
+ *       - Logout
+ *     description: Returns to the main page
+ *     produces:
+ *       - redirect
+ */
 	// LOGOUT ==============================
 	app.get('/logout', function(req, res) {
 		req.logout();
 		res.redirect('/');
 	});
+
+	
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
