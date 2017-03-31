@@ -70,7 +70,7 @@ module.exports = function(app) {
 			return res.send(user);
 		}
 		return res.send(400);
-	})
+	})	
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
