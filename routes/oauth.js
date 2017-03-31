@@ -2,7 +2,7 @@ var auth = require('../middleware/auth');
 var jwt = require('jwt-simple');
 var secret = require('../config/secret');
 var userRepo = require('../repo/user');
-var roles = require('../auth/connectroles');
+var roles = require('../auth/connectroles')();
 
 module.exports = function(app) {
 // normal routes ===============================================================
