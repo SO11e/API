@@ -1,11 +1,39 @@
 var auth = require('../middleware/auth');
 var jwt = require('jwt-simple');
 var secret = require('../config/secret');
-var userRepo = require('../repo/user')
+var userRepo = require('../repo/user');
+var roles = require('../auth/connectroles');
 
 module.exports = function(app) {
-
 // normal routes ===============================================================
+/**
+ * @swagger
+ * /testadminrole:
+ *   get:
+ *     tags:
+ *       - Admin
+ *       - Roles
+ *     description: Checks if user is admin
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: bearer
+ *         in: header
+ *         description: Token to determine which user is logged in (not required if logged in with session)
+ *         required: false
+ *         type: string
+ *         format: string
+ *     responses:
+ *       200: 
+ *         description: confirmed user has admin role
+ *       401:
+ *         description: access denied, unauthorized
+ *       500:
+ *         description: Server error
+ */
+	app.get('/testadminrole', roles.can('access admin'), function(req, res){
+		res.send(200, {'msg':'User has Admin role'});
+	});
 
 /**
  * @swagger
