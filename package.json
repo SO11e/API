@@ -18,21 +18,18 @@
   },
   "homepage": "https://github.com/SO11e/ZB_API#readme",
   "dependencies": {
-     "bcrypt-nodejs": "latest",
+    "bcrypt-nodejs": "latest",
     "body-parser": "~1.0.0",
     "connect-flash": "~0.1.1",
     "cookie-parser": "~1.0.0",
     "ejs": "~0.8.5",
     "express": "^4.15.2",
     "express-session": "~1.0.0",
+    "jwt-simple": "^0.5.1",
     "method-override": "~1.0.0",
     "mongoose": "^4.8.6",
     "morgan": "~1.0.0",
     "nodemon": "^1.11.0",
-    "passport": "~0.1.17",
-    "passport-facebook": "~1.0.2",
-    "passport-google-oauth": "~0.1.5",
-    "passport-local": "~0.1.6",
     "q": "^1.4.1"
   }
 }
