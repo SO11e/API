@@ -2,14 +2,37 @@
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
+console.log('Initializing user schema')
+
+/**
+	 * @swagger
+	 * definitions:
+	 *   user:
+	 *     type: object
+	 *     required:
+	 *       - email
+	 *     properties:
+	 *       email:
+	 *         type: string
+	 *       password:
+	 *         type: string
+     *       region:
+     *         type: string
+     *       roles:
+     *         type: string
+	 * 
+	*/
+
 // define the schema for our user model
 var userSchema = mongoose.Schema({
 
     local            : {
         email        : String,
         password     : String,
-        region       : String,
     },
+
+    region       : String,
+    roles        : String,
 
 });
 
