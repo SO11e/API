@@ -1,24 +1,76 @@
-module.exports = function(app, passport) {
+var auth = require('../middleware/auth');
+var jwt = require('jwt-simple');
+var secret = require('../config/secret');
+var userRepo = require('../repo/user')
+
+module.exports = function(app) {
 
 // normal routes ===============================================================
 
-	// show the home page (will also have our login links)
-	app.get('/', function(req, res) {
-		res.render('index.ejs');
+/**
+ * @swagger
+ * /isloggedin:
+ *   get:
+ *     tags:
+ *       - User
+ *       - Login
+ *     description: Checks if user is logged in
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: bearer
+ *         in: header
+ *         description: Token to determine which user is logged in (not required if logged in with session)
+ *         required: false
+ *         type: string
+ *         format: string
+ *     responses:
+ *       200: 
+ *         description: confirmed user is logged in
+ *       400:
+ *         description: User error, Not logged in
+ *       500:
+ *         description: Server error     
+ */
+	app.get('/isloggedin', auth.isLoggedIn,  function(req, res){
+		res.send("200", {"msg":"confirmed user is logged in"});
 	});
 
-	// PROFILE SECTION =========================
-	app.get('/profile', isLoggedIn, function(req, res) {
-		res.render('profile.ejs', {
-			user : req.user
-		});
-	});
-
-	// LOGOUT ==============================
-	app.get('/logout', function(req, res) {
-		req.logout();
-		res.redirect('/');
-	});
+	/**
+ * @swagger
+ * /users/me:
+ *   get:
+ *     tags:
+ *       - User
+ *     description: Get the current user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: bearer
+ *         in: header
+ *         description: Token to determine which user is logged in (not required if logged in with session)
+ *         required: false
+ *         type: string
+ *         format: string
+ *     responses:
+ *       200: 
+ *         description: User returned
+ *         schema:
+ *           $ref: '#/definitions/user'
+ *       400:
+ *         description: User error, Not logged in
+ *       500:
+ *         description: Server error
+ */
+	app.get('/users/me', auth.isLoggedIn, function(req, res){
+		var token = req.header('bearer');
+		var user;
+		if(token){
+			user = jwt.decode(token, secret.secret);
+			return res.send(user);
+		}
+		return res.send(400);
+	})
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
@@ -26,37 +78,64 @@ module.exports = function(app, passport) {
 
 	// locally --------------------------------
 		// LOGIN ===============================
-		// show the login form
-		app.get('/login', function(req, res) {
-			res.render('login.ejs', { message: req.flash('loginMessage') });
-		});
-
-		// process the login form
-		app.post('/login', passport.authenticate('local-login', {
-			successRedirect : '/profile', // redirect to the secure profile section
-			failureRedirect : '/login', // redirect back to the signup page if there is an error
-			failureFlash : true // allow flash messages
-		}));
+		/**
+		 * @swagger
+		 * /login:
+		 *   post:
+		 *     tags:
+		 *       - Login
+		 *     description: Logs in user
+		 *     produces:
+		 *       - application/json
+		 *       - application/html
+		 *     parameters:
+		 *       - name: user
+		 *         description: User object
+		 *         in: body
+		 *         required: true
+		 *         schema:
+		 *           $ref: '#/definitions/user'
+		 *       - name: responsetype
+		 *         description: Tells the route what to return
+		 *         in: header
+		 *         required: false
+		 *         type: string
+		 *     responses:
+		 *       200:
+		 *         description: Returns token if JSON, if HTML returns /profile page
+		 *       400:
+		 *         description: User failed logging in
+		 *       500:
+ 		 *         description: Internal server error user not logged in
+		 */		
+		app.post('/login', userRepo.localLogin);
 
 		// SIGNUP =================================
-		// show the signup form
-		app.get('/signup', function(req, res) {
-			res.render('signup.ejs', { message: req.flash('loginMessage') });
-		});
-
-		// process the signup form
-		app.post('/signup', passport.authenticate('local-signup', {
-			successRedirect : '/profile', // redirect to the secure profile section
-			failureRedirect : '/signup', // redirect back to the signup page if there is an error
-			failureFlash : true // allow flash messages
-		}));
+		/**
+		 * @swagger
+		 * /signup:
+		 *   post:
+		 *     tags:
+		 *       - Signup
+		 *     description: Signs up User
+		 *     produces:
+		 *       - application/json
+		 *       - application/html
+		 *     parameters:
+		 *       - name: user
+		 *         description: User object
+		 *         in: body
+		 *         required: true
+		 *         schema:
+		 *           $ref: '#/definitions/user'
+		 *     responses:
+		 *       200:
+		 *         description: Returns token if JSON, if HTML returns /profile page
+		 *       400:
+		 *         description: Email is taken
+		 *       500:
+ 		 *         description: Internal server error user not created
+		 */
+		app.post('/signup', userRepo.localSignup);
 
 };
-
-// route middleware to ensure user is logged in
-function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated())
-		return next();
-
-	res.redirect('/');
-}
