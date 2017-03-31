@@ -20,11 +20,11 @@ var secret = require('./config/secret');
 // swagger definition
 var swaggerDefinition = {
   info: {
-    title: 'Node Swagger API',
+    title: 'De Zonnebloem API',
     version: '1.0.0',
-    description: 'Demonstrating how to describe a RESTful API with Swagger',
+    description: 'Zonnebloem API docs',
   },
-  host: 'localhost:3000',
+  host: 'zb-api.herokuapp.com',
   basePath: '/',
 };
 
