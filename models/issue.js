@@ -27,14 +27,14 @@ console.log('Initializing issue schema')
      *         type: string
      *       dateCreated:
      *         type: string
-     *         format: dateTime
+     *         format: date
      *       dateResolved:
      *         type: string
-     *         format: dateTime
+     *         format: date
      *       latitude:
      *         type: number      
      *       longitude:
-     *         type: Number
+     *         type: number
 	*/
 
 // define the schema for our issue model
