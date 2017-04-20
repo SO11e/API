@@ -1,8 +1,8 @@
 // set up ======================================================================
 // get all the tools we need
-var swaggerJSDoc = require('swagger-jsdoc');
-var express  = require('express');
-var path = require('path');
+var swaggerJSDoc  = require('swagger-jsdoc');
+var express       = require('express');
+var path          = require('path');
 var app      = express();
 var port     = process.env.PORT || 3000;
 var mongoose = require('mongoose');
@@ -13,6 +13,8 @@ var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
+
+var jwt = require('jwt-simple');
 
 var configDB = require('./config/database.js');
 var secret = require('./config/secret');
