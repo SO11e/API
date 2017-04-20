@@ -27,10 +27,10 @@ console.log('Initializing issue schema')
      *         type: string
      *       dateCreated:
      *         type: string
-     *         format: date
+     *         format: dateTime
      *       dateResolved:
      *         type: string
-     *         format: date
+     *         format: dateTime
      *       latitude:
      *         type: number      
      *       longitude:
