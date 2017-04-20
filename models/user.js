@@ -32,7 +32,7 @@ var userSchema = mongoose.Schema({
     },
 
     region       : String,
-    roles        : String,
+    role        : String,
 
 });
 
