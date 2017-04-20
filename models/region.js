@@ -11,11 +11,22 @@ console.log('Initializing region schema')
 	 *     type: object
      *     required:
      *       - name
+     *       - adminUser
+     *       - status
+     *       - postalCodes
      *       - latitude
      *       - longitude
 	 *     properties:
      *       name:
      *         type: string
+     *       adminuser:
+     *         type: string
+     *         format: ObjectId
+     *       status:
+     *         type: boolean
+     *       postalCodes:
+     *         type: string
+     *         format: array
      *       latitude:
      *         type: number      
      *       longitude:
@@ -25,6 +36,9 @@ console.log('Initializing region schema')
 // define the schema for our region model
 var regionSchema = mongoose.Schema({
     name : {type: String, required: true},
+    adminUser : { type: mongoose.Schema.Types.ObjectId, ref: "User", required:true },
+    status : { type: boolean, required: true },
+    postalCodes : [{type: String, required:true}],
     latitude : {type: Number, required: true},
     longitude : {type: Number, required: true},
 
