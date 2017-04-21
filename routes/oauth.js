@@ -5,7 +5,7 @@ var userRepo = require('../repo/user');
 var roles = require('../auth/connectroles')();
 
 module.exports = function(app) {
-// normal routes ===============================================================
+// test routes ===============================================================
 /**
  * @swagger
  * /testadminrole:
@@ -64,6 +64,7 @@ module.exports = function(app) {
 		res.send("200", {"msg":"confirmed user is logged in"});
 	});
 
+// normal routes ===============================================================================
 	/**
  * @swagger
  * /users/me:
@@ -93,7 +94,7 @@ module.exports = function(app) {
 	app.get('/users/me', auth.isLoggedIn, userRepo.currentUser);
 
 // =============================================================================
-// AUTHENTICATE (FIRST LOGIN) ==================================================
+// AUTHENTICATE ================================================================
 // =============================================================================
 
 	// locally --------------------------------
