@@ -1,6 +1,8 @@
 // load the things we need
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
+var jwt = require('jwt-simple');
+var secret = require('../config/secret');
 
 console.log('Initializing user schema')
 
@@ -46,6 +48,36 @@ userSchema.methods.generateHash = function(password) {
 userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
+
+// encode user
+userSchema.methods.encode = function(user){
+	var tokenUser = {
+		_id : user._id,
+		email : user.email,
+		password : user.password
+	}
+
+	return jwt.encode(tokenUser, secret.secret);
+}
+
+// check if token is valid
+userSchema.statics.validToken = function(token, callback){
+	var tokenUser = jwt.decode(token, secret.secret);
+
+	this.findOne({'_id':tokenUser._id}, function(err, user){
+		if(!err){
+			if(user.email == tokenUser.email && user.password == tokenUser.password){
+				callback(null, user);
+			}
+			else{
+				callback(400);
+			}
+		}
+		else{
+			callback(err);
+		}
+	})
+}
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('User', userSchema);

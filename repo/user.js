@@ -1,7 +1,5 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var jwt = require('jwt-simple');
-var secret = require('../config/secret');
 
 var userRepo = {
     localLogin: function(req,res,next){
@@ -15,7 +13,7 @@ var userRepo = {
                     return res.send(400, {"msg":"Something went wrong, try again"})
                 // all is well, return user
                 else
-                    var token = jwt.encode(user, secret.secret)
+                    var token = user.encode(user);
 					return res.send(token);
             });
         
@@ -49,7 +47,7 @@ var userRepo = {
                         if (err)
                             throw err;
 
-                        var token = jwt.encode(newUser, secret.secret)
+                        var token = newUser.encode(newUser);
 					    return res.send(token);
                     });
                 }
@@ -58,15 +56,21 @@ var userRepo = {
     },
 
 
-    currentUser : function(req){
+    currentUser : function(req, res){
         var token = req.header('bearer');
-		if(token){
-			var user = jwt.decode(token, secret.secret);
-				return user;
-		}
-		else{
-			return null;
-		}
+        if(token){
+            User.validToken(token, function(err,user){
+                if(!err){
+                    return res.send(user);
+                }
+                else{
+                    return res.send(err);
+                }
+            })
+        }
+        else{
+            return res.send(400);
+        }
     }
 }
 
