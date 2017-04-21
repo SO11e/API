@@ -31,9 +31,8 @@ console.log('Initializing report schema')
      *       issues:
      *         type: array
      *         items:
-     *           issueId:
-     *             type: string
-     *             format: ObjectId
+     *           type: string
+     *           format: ObjectId
 	*/
 
 // define the schema for our issue model
@@ -44,9 +43,7 @@ var reportSchema = mongoose.Schema({
     dateCreated : {type: Date, required: true},
     dateUpdated : {type: Date},
     createdBy : {type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
-    issues : [{
-        issueId: { type: mongoose.Schema.Types.ObjectId, ref: "Issue", required: true }
-    }],
+    issues : [ { type: mongoose.Schema.Types.ObjectId, ref: "Issue", required: true } ],
 
 });
 
