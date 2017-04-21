@@ -92,16 +92,6 @@ module.exports = function(app) {
  */
 	app.get('/users/me', auth.isLoggedIn, userRepo.currentUser);
 
-	// function(req, res){
-	// 	var token = req.header('bearer');
-	// 	var user;
-	// 	if(token){
-	// 		user = jwt.decode(token, secret.secret);
-	// 		return res.send(user);
-	// 	}
-	// 	return res.send(400);
-	// })	
-
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
 // =============================================================================
