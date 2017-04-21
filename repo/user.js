@@ -1,11 +1,9 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var jwt = require('jwt-simple');
-var secret = require('../config/secret');
 
 var userRepo = {
     localLogin: function(req,res,next){
-            User.findOne({ 'local.email' :  req.body.email }, function(err, user) {
+            User.findOne({ 'email' :  req.body.email }, function(err, user) {
                 // if there are any errors, return the error
             	if (err)
                 	return res.send(500, err);
@@ -15,7 +13,7 @@ var userRepo = {
                     return res.send(400, {"msg":"Something went wrong, try again"})
                 // all is well, return user
                 else
-                    var token = jwt.encode(user, secret.secret)
+                    var token = user.encode(user);
 					return res.send(token);
             });
         
@@ -23,7 +21,7 @@ var userRepo = {
     },
 
     localSignup: function(req,res,next){
-        User.findOne({'local.email': req.body.email}, function(err, existingUser) {
+        User.findOne({'email': req.body.email}, function(err, existingUser) {
 
                 // if there are any errors, return the error
                 if (err)
@@ -38,14 +36,18 @@ var userRepo = {
                     // create the user
                     var newUser            = new User();
 
-                    newUser.local.email    = req.body.email;
-                    newUser.local.password = newUser.generateHash(req.body.password);
+                    newUser.email    = req.body.email;
+                    newUser.password = newUser.generateHash(req.body.password);
+                    newUser.region   = req.body.region;
+
+                    if(req.body.roles)
+                        newUser.roles = req.body.roles;
 
                     newUser.save(function(err) {
                         if (err)
                             throw err;
 
-                        var token = jwt.encode(newUser, secret.secret)
+                        var token = newUser.encode(newUser);
 					    return res.send(token);
                     });
                 }
@@ -54,15 +56,21 @@ var userRepo = {
     },
 
 
-    currentUser : function(req){
+    currentUser : function(req, res){
         var token = req.header('bearer');
-		if(token){
-			var user = jwt.decode(token, secret.secret);
-				return user;
-		}
-		else{
-			return null;
-		}
+        if(token){
+            User.validToken(token, function(err,user){
+                if(!err){
+                    return res.send(user);
+                }
+                else{
+                    return res.send(err);
+                }
+            })
+        }
+        else{
+            return res.send(400);
+        }
     }
 }
 

@@ -5,7 +5,7 @@ var userRepo = require('../repo/user');
 var roles = require('../auth/connectroles')();
 
 module.exports = function(app) {
-// normal routes ===============================================================
+// test routes ===============================================================
 /**
  * @swagger
  * /testadminrole:
@@ -64,6 +64,7 @@ module.exports = function(app) {
 		res.send("200", {"msg":"confirmed user is logged in"});
 	});
 
+// normal routes ===============================================================================
 	/**
  * @swagger
  * /users/me:
@@ -90,18 +91,10 @@ module.exports = function(app) {
  *       500:
  *         description: Server error
  */
-	app.get('/users/me', auth.isLoggedIn, function(req, res){
-		var token = req.header('bearer');
-		var user;
-		if(token){
-			user = jwt.decode(token, secret.secret);
-			return res.send(user);
-		}
-		return res.send(400);
-	})	
+	app.get('/users/me', auth.isLoggedIn, userRepo.currentUser);
 
 // =============================================================================
-// AUTHENTICATE (FIRST LOGIN) ==================================================
+// AUTHENTICATE ================================================================
 // =============================================================================
 
 	// locally --------------------------------
@@ -115,22 +108,18 @@ module.exports = function(app) {
 		 *     description: Logs in user
 		 *     produces:
 		 *       - application/json
-		 *       - application/html
 		 *     parameters:
-		 *       - name: user
-		 *         description: User object
+		 *       - name: email
+		 *         description: Users email adress
 		 *         in: body
 		 *         required: true
-		 *         schema:
-		 *           $ref: '#/definitions/user'
-		 *       - name: responsetype
-		 *         description: Tells the route what to return
-		 *         in: header
-		 *         required: false
-		 *         type: string
+		 *       - name: password
+		 *         description: Users password
+		 *         in: body
+		 *         required: true
 		 *     responses:
 		 *       200:
-		 *         description: Returns token if JSON, if HTML returns /profile page
+		 *         description: Returns token 
 		 *       400:
 		 *         description: User failed logging in
 		 *       500:
@@ -148,7 +137,6 @@ module.exports = function(app) {
 		 *     description: Signs up User
 		 *     produces:
 		 *       - application/json
-		 *       - application/html
 		 *     parameters:
 		 *       - name: user
 		 *         description: User object
@@ -158,7 +146,7 @@ module.exports = function(app) {
 		 *           $ref: '#/definitions/user'
 		 *     responses:
 		 *       200:
-		 *         description: Returns token if JSON, if HTML returns /profile page
+		 *         description: Returns token 
 		 *       400:
 		 *         description: Email is taken
 		 *       500:
