@@ -11,7 +11,7 @@ var authMiddleware = {
 					return next();
 				}
 				else{
-					return res.send(500, err);
+					return res.send(400, {'msg':'Token expired'});
 				}
 			})			
 		}
