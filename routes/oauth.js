@@ -115,7 +115,6 @@ module.exports = function(app) {
 		 *     description: Logs in user
 		 *     produces:
 		 *       - application/json
-		 *       - application/html
 		 *     parameters:
 		 *       - name: user
 		 *         description: User object
@@ -130,7 +129,7 @@ module.exports = function(app) {
 		 *         type: string
 		 *     responses:
 		 *       200:
-		 *         description: Returns token if JSON, if HTML returns /profile page
+		 *         description: Returns token 
 		 *       400:
 		 *         description: User failed logging in
 		 *       500:
@@ -148,7 +147,6 @@ module.exports = function(app) {
 		 *     description: Signs up User
 		 *     produces:
 		 *       - application/json
-		 *       - application/html
 		 *     parameters:
 		 *       - name: user
 		 *         description: User object
@@ -158,7 +156,7 @@ module.exports = function(app) {
 		 *           $ref: '#/definitions/user'
 		 *     responses:
 		 *       200:
-		 *         description: Returns token if JSON, if HTML returns /profile page
+		 *         description: Returns token 
 		 *       400:
 		 *         description: Email is taken
 		 *       500:
