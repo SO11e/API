@@ -18,7 +18,8 @@ console.log('Initializing report schema')
      *       description:
      *         type: string
      *       status:
-     *         type: enum
+     *         type: string
+     *         enum: &STATUS [created, send, closed]
      *       dateCreated:
      *         type: string
      *         format: date
@@ -31,8 +32,9 @@ console.log('Initializing report schema')
      *       issues:
      *         type: array
      *         items:
-     *           type: string
-     *           format: ObjectId
+     *           issueId:
+     *             type: string
+     *             format: ObjectId
 	*/
 
 // define the schema for our issue model
