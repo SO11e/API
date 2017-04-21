@@ -109,17 +109,14 @@ module.exports = function(app) {
 		 *     produces:
 		 *       - application/json
 		 *     parameters:
-		 *       - name: user
-		 *         description: User object
+		 *       - name: email
+		 *         description: Users email adress
 		 *         in: body
 		 *         required: true
-		 *         schema:
-		 *           $ref: '#/definitions/user'
-		 *       - name: responsetype
-		 *         description: Tells the route what to return
-		 *         in: header
-		 *         required: false
-		 *         type: string
+		 *       - name: password
+		 *         description: Users password
+		 *         in: body
+		 *         required: true
 		 *     responses:
 		 *       200:
 		 *         description: Returns token 
