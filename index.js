@@ -51,6 +51,7 @@ mongoose.connect(configDB.url); // connect to our database
 // Models ======================================================================
 require('./models/user');
 require('./models/issue');
+require('./models/region');
 require('./models/report');
 
 // set up our express application
