@@ -21,8 +21,10 @@ console.log('Initializing routesWalked schema')
      *         type: string
      *         format: ObjectId
      *       waypoints:
-     *         type: object
-     *         $ref: '#/definitions/waypoints'
+     *         type: array
+     *         items:
+     *           schema:
+     *             $ref: '#/definitions/waypoints'
      * 
      *   waypoints:
      *     type: object
