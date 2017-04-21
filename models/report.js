@@ -32,9 +32,8 @@ console.log('Initializing report schema')
      *       issues:
      *         type: array
      *         items:
-     *           issueId:
-     *             type: string
-     *             format: ObjectId
+     *           type: string
+     *           format: ObjectId
 	*/
 
 // define the schema for our issue model
