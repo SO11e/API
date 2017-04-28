@@ -2,7 +2,6 @@ var auth = require('../middleware/auth');
 var jwt = require('jwt-simple');
 var secret = require('../config/secret');
 var userRepo = require('../repo/user');
-var roles = require('../auth/connectroles')();
 
 module.exports = function (app) {
 	// test routes ===============================================================
@@ -31,7 +30,7 @@ module.exports = function (app) {
 	 *       500:
 	 *         description: Server error
 	 */
-	app.get('/testadminrole', roles.can('access admin'), function (req, res) {
+	app.get('/testadminrole', auth.isAdmin, function (req, res) {
 		res.send(200, { 'msg': 'User has Admin role' });
 	});
 
@@ -130,10 +129,10 @@ module.exports = function (app) {
 	// SIGNUP =================================
 	/**
 	 * @swagger
-	 * /signup:
+	 * /users:
 	 *   post:
 	 *     tags:
-	 *       - Signup
+	 *       - users
 	 *     description: Signs up User
 	 *     produces:
 	 *       - application/json
@@ -144,15 +143,21 @@ module.exports = function (app) {
 	 *         required: true
 	 *         schema:
 	 *           $ref: '#/definitions/user'
+	 *       - name: bearer
+	 *         in: header
+	 *         description: Token to determine which user is logged in
+	 *         required: false
+	 *         type: string
+	 *         format: string
 	 *     responses:
 	 *       200:
-	 *         description: Returns token 
+	 *         description: Returns successmessage
 	 *       400:
 	 *         description: Email is taken
 	 *       500:
-		 *         description: Internal server error user not created
+	 *         description: Internal server error user not created
 	 */
-	app.post('/signup', userRepo.localSignup);
+	app.post('/users', auth.isAdmin, userRepo.create);
 
 	// Change User Data =================================
 	/**
