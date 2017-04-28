@@ -12,7 +12,7 @@ module.exports = function(){
 
 	// Access Admin pages can only be done by Admin
 	roles.use('access admin', function(req){
-		if(userRepo.currentUser(req).roles === 'admin'){
+		if(userRepo.getUser(req).roles === 'admin'){
 			return true;
 		};
 	})
