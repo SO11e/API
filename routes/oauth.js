@@ -184,7 +184,9 @@ module.exports = function (app) {
 	  *         format: string
 	  *     responses:
 	  *       200:
-	  *         description: user updated, returns new token (if not admin)
+	  *         description: user updated, returns new token or successmessage
+	  *       400:
+	  *         description: Token does not exist or user has no rights to edit the user
 	  *       500:
 	  *         description: Internal server error user not updated
 	 */
