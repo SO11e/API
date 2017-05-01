@@ -45,7 +45,7 @@ var issueSchema = mongoose.Schema({
     postalCode : String, 
     place : String, 
     description : {type: String, required: true},
-    dateCreated : {type: Date, required: true},
+    dateCreated : {type: Date, required: true, default: new Date()},
     dateResolved : Date, 
     latitude : {type: Number, required: true},
     longitude : {type: Number, required: true},
