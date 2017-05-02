@@ -13,6 +13,8 @@ console.log('Initializing user schema')
 	 *     type: object
 	 *     required:
 	 *       - email
+	 *       - password
+	 *       - roles
 	 *     properties:
 	 *       email:
 	 *         type: string
