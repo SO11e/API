@@ -111,7 +111,15 @@ var userRepo = {
         if (token) {
             User.validToken(token, function (err, user) {
                 if (!err) {
-                    return res.send(user);
+                     var thing = {
+                        _id : user._id,
+                        email : user.email,
+                        region : user.region,
+                        roles : user.roles,
+                        __v : user.__v
+                    };
+
+                    return res.send(thing);
                 }
                 else {
                     return res.send(err);
