@@ -56,20 +56,41 @@ var userRepo = {
         });
     },
 
+    getUsers: function(req,res){
+        var perPage = 10;
+        var page = 0 * perPage;
+
+        if (req.query.perPage != null) {
+            perPage = parseInt(req.query.perPage);
+            console.log(req.query.perPage + ' perPage');
+        }
+        if (req.query.page != null) {
+            page = parseInt(req.query.page * perPage);
+            console.log(req.query.page + ' page');
+        }
+
+        User.find().limit(perPage).skip(page).exec(function (err, data) {
+            if (!err) {
+                var json = [];
+                data.forEach(function (item, key) {
+                    var thing = {
+                        _id : item._id,
+                        email : item.email,
+                        region : item.region,
+                        roles : item.roles
+                    };
+                    json.push(thing);
+                })
+
+                return res.send({ "page": page, "perPage": perPage, "data": json, });
+            } else {
+                throw err;
+            }
+        })
+    },
+
     getUser: function (req, res) {
         var token = req.header('bearer');
-		// if(token){
-		// 	var user = jwt.decode(token, secret.secret);
-		// 		return user;
-		// }
-		// else{
-		// 	if (req.isAuthenticated())
-		// 		return req.user;
-
-		// 	return null;
-		// }
-
-
         if (token) {
             User.validToken(token, function (err, user) {
                 if (!err) {
@@ -118,15 +139,17 @@ var userRepo = {
                             if (!err) {
                                 var localemail = req.body.email;
                                 var localpassword = req.body.password;
-                                var localregion = req.body.region;
-                                if (isAdmin)
+                                if (isAdmin){
+                                    var localregion = req.body.region;
                                     var localroles = req.body.roles;
+                                }
+                                    
 
                                 if (localemail)
                                     user.email = localemail;
                                 if (localpassword)
                                     user.password = user.generateHash(localpassword);
-                                if (localregion)
+                                if (isAdmin && localregion)
                                     user.region = localregion;
                                 if (isAdmin && localroles)
                                     user.roles = localroles;
