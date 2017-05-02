@@ -92,6 +92,48 @@ module.exports = function (app) {
  */
 	app.get('/users/me', auth.isLoggedIn, userRepo.currentUser);
 
+	/**
+ * @swagger
+ * /users:
+ *   get:
+ *     tags:
+ *       - User
+ *     description: Get the users
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: perPage
+ *         in: query
+ *         description: Integer that defines the amount of items per page (default = 10)
+ *         required: false
+ *         type: integer
+ *         format: integer
+ *         default: 10
+ *       - name: page
+ *         in: query
+ *         description: Integer that defines the page that has to be displayed (default = 0)
+ *         required: false
+ *         type: integer
+ *         format: integer
+ *         default: 0
+ *       - name: bearer
+ *         in: header
+ *         description: Token to determine which user is logged in (not required if logged in with session)
+ *         required: false
+ *         type: string
+ *         format: string
+ *     responses:
+ *       200: 
+ *         description: Users returned
+ *         schema:
+ *           $ref: '#/definitions/user'
+ *       400:
+ *         description: User error, Not logged in
+ *       500:
+ *         description: Server error
+ */
+	app.get('/users', auth.isLoggedIn, auth.isAdmin, userRepo.getUsers);
+
 	// =============================================================================
 	// AUTHENTICATE ================================================================
 	// =============================================================================
