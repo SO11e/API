@@ -36,4 +36,5 @@ module.exports = function(app) {
  */
 
     app.post('/issues', issuesRepo.create);
+    app.get('/issues', issuesRepo.getall);
 }
