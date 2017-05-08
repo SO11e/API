@@ -237,6 +237,6 @@ module.exports = function (app) {
 	  *       500:
 	  *         description: Internal server error user not updated
 	 */
-	app.post('/users/:id', userRepo.update);
+	app.put('/users/:id', userRepo.update);
 
 };

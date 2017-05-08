@@ -67,10 +67,8 @@ userSchema.statics.validToken = function (token, callback) {
 	if (token) {
 		try {
 			var decoded = jwt.decode(token, secret.secret);
-			console.log(decoded);
 
 			this.findOne({ '_id': decoded._id }, function (err, user) {
-				console.log(user);
 				if (!err) {
 					if (user.email == decoded.email && user.password == decoded.password) {
 						callback(null, user);
