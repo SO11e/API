@@ -72,6 +72,51 @@ var issueRepo = {
             return res.send(200);
         });
     },
+
+    update: function (req, res) {
+        Issue.findOne({ '_id': req.params.id }, function (err, issue) {
+            if (!err) {
+
+                var streetName = req.body.streetName;
+                var houseNumber = req.body.houseNumber;
+                var postalCode = req.body.postalCode;
+                var place = req.body.place;
+                var description = req.body.description;
+                var latitude = req.body.latitude;
+                var longitude = req.body.longitude;
+                var dateresolved = req.body.dateresolved;
+
+                if (streetName)
+                    issue.streetName = streetName;
+                if (houseNumber)
+                    issue.houseNumber = houseNumber;
+                if (postalCode)
+                    issue.postalCode = postalCode;
+                if (place)
+                    issue.place = place;
+                if (description)
+                    issue.description = description;
+                if (latitude)
+                    issue.latitude = latitude;
+                if (longitude)
+                    issue.longitude = longitude;
+                if(dateresolved)
+                    issue.dateresolved = dateresolved;
+
+                issue.save((err) => {
+                    if (err) {
+                        res.status(500);
+                        return res.send({
+                            "status": 500,
+                            "error": err
+                        });
+                    }
+                    res.status(201);
+                    return res.json(issue);
+                });
+            }
+        })
+    },
 }
 
 module.exports = issueRepo;
