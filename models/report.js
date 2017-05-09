@@ -12,8 +12,7 @@ console.log('Initializing report schema')
      *     required:
      *       - description
      *       - dateCreated
-     *       - latitude
-     *       - longitude
+     *       - issues
 	 *     properties:
      *       description:
      *         type: string
@@ -41,7 +40,7 @@ var reportSchema = mongoose.Schema({
 
     description : {type: String, required: true},
     status : { type: String, enum: ['created', 'send', 'closed'], required:true },
-    dateCreated : {type: Date, required: true},
+    dateCreated : {type: Date, required: true, default: new Date()},
     dateUpdated : {type: Date},
     createdBy : {type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
     issues : [ { type: mongoose.Schema.Types.ObjectId, ref: "Issue", required: true } ],

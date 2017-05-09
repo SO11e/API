@@ -75,6 +75,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 require('./routes/oauth')(app); // load our routes and pass in our app and fully configured passport
 require('./routes/issues')(app); // load the routes to handle issue routes
+require('./routes/reports')(app); // load the routes to handle reports
 app.get('/swagger.json', function(req, res) {
 		res.setHeader('Content-Type', 'application/json');
 		res.send(swaggerSpec);
