@@ -33,9 +33,14 @@ var userSchema = mongoose.Schema({
 	email: { type: String, required: true },
 	password: { type: String, required: true },
 
-	//TODO: na pullrequestmerge aanpassen!
-	//region       : { type: mongoose.Schema.Types.ObjectId, ref: "Region", required:true },
-	region: String,
+	firstname: { type: String, required: true },
+	lastname: { type: String, required: true },
+	street: { type: String },
+	housenumber: { type: String },
+	zipcode: { type: String },
+	city: { type: String },
+
+	region       : { type: mongoose.Schema.Types.ObjectId, ref: "Region", required:true },
 	roles: { type: String, required: true, default: 'user' },
 
 });
