@@ -33,8 +33,8 @@ var userSchema = mongoose.Schema({
 	email: { type: String, required: true },
 	password: { type: String, required: true },
 
-	firstname: { type: String },
-	lastname: { type: String },
+	firstname: { type: String, required: true },
+	lastname: { type: String, required: true },
 	street: { type: String },
 	housenumber: { type: String },
 	zipcode: { type: String },
