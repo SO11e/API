@@ -90,7 +90,7 @@ module.exports = function(app) {
  *         description: ID of routes in region that needs to be fetched
  *         required: true
  *         type: string
- *         format: string
+ *         format: ObjectId
  *       - name: bearer
  *         in: header
  *         description: Token to determine which user is logged in

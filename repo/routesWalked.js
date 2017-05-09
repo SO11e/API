@@ -55,14 +55,32 @@ var routesWalkedRepo = {
     },
 
     getbyregion: function (req, res) {
-        Issue.findOne({ '_id': req.params.id }, function (err, polish) {
+        var perPage = 10;
+        var page = 0 * perPage;
+
+        if (req.query.perPage != null) {
+            perPage = parseInt(req.query.perPage);
+            console.log(req.query.perPage + ' perPage');
+        }
+        if (req.query.page != null) {
+            page = parseInt(req.query.page * perPage);
+            console.log(req.query.page + ' page');
+        }
+
+        RoutesWalked.find({ regionId: req.params.regionid }).limit(perPage).skip(page).exec(function (err, data) {
             if (!err) {
-                return res.send(polish);
+                var json = [];
+                data.forEach(function (item, key) {
+                    var thing = item;
+                    json.push(thing);
+                })
+
+                return res.send({ "page": page, "perPage": perPage, "data": json, });
+            } else {
+                return res.send(400, err);
             }
-            else {
-                return res.send(400);
-            }
-        });
+        })
+
     },
 
 }
