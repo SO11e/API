@@ -42,8 +42,10 @@ var issueSchema = mongoose.Schema({
 
     streetName : String, 
     houseNumber : String, 
-    postalCode : String, 
-    place : String, 
+    zipCode : String, 
+    city : String, 
+    region : { type: mongoose.Schema.Types.ObjectId, ref: "Region", required:true },
+    status :  { type: String, enum: ['open', 'accepted', 'refused', 'closed'], required:true },
     description : {type: String, required: true},
     dateCreated : {type: Date, required: true, default: new Date()},
     dateResolved : Date, 
