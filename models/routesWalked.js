@@ -40,8 +40,8 @@ console.log('Initializing routesWalked schema')
 // define the schema for our issue model
 var routesWalkedSchema = mongoose.Schema({
 
-    UserId : { type: mongoose.Schema.Types.ObjectId, ref: "User", required:true }, 
-    RegionId : { type: mongoose.Schema.Types.ObjectId, ref: "Region", required:true },
+    userId : { type: mongoose.Schema.Types.ObjectId, ref: "User", required:true }, 
+    regionId : { type: mongoose.Schema.Types.ObjectId, ref: "Region", required:true },
     waypoints : [{
         latitude : {type: Number, required: true},
         longitude : {type: Number, required: true},
