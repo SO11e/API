@@ -1,6 +1,6 @@
 var request = require('request');
 var auth = require('../middleware/auth');
-var issuesRepo = require('../repo/routesWalked');
+var routesWalkedRepo = require('../repo/routesWalked');
 
 module.exports = function(app) {
     app.all('/routeswalked*', auth.isLoggedIn);
@@ -35,7 +35,7 @@ module.exports = function(app) {
  	 *       500:
  	 *         description: Internal server error routesWalked not created
 	 */
-    app.post('/routeswalked', issuesRepo.create);
+    app.post('/routeswalked', routesWalkedRepo.create);
 
     /**
 	 * @swagger
@@ -73,7 +73,7 @@ module.exports = function(app) {
      *         schema:
      *           $ref: '#/definitions/routesWalked'
 	 */
-    app.get('/routeswalked', issuesRepo.getall);
+    app.get('/routeswalked', routesWalkedRepo.getall);
 
  /**
  * @swagger
@@ -103,5 +103,5 @@ module.exports = function(app) {
  *         schema:
  *           $ref: '#/definitions/routesWalked'
  */
-    app.get('/routeswalked/:regionid', issuesRepo.getbyregion);
+    app.get('/routeswalked/:regionid', routesWalkedRepo.getbyregion);
 }

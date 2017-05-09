@@ -39,12 +39,10 @@ var routesWalkedRepo = {
             console.log(req.query.page + ' page');
         }
 
-        Issue.find().limit(perPage).skip(page).exec(function (err, data) {
+        RoutesWalked.find().limit(perPage).skip(page).exec(function (err, data) {
             if (!err) {
                 var json = [];
                 data.forEach(function (item, key) {
-                    //TODO: niet te strikt nemen!
-
                     var thing = item;
                     json.push(thing);
                 })
