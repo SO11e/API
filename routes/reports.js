@@ -10,5 +10,5 @@ module.exports = function(app) {
     app.get('/reports', reportRepo.getall);
     app.get('/reports/:id', reportRepo.readsingle);
     app.delete('/reports/:id', reportRepo.delete);
-    //app.put('/reports/:id', reportRepo.update);
+    app.put('/reports/:id', reportRepo.update);
 }

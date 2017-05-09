@@ -83,7 +83,7 @@ var reportRepo = {
     },
 
     update: function (req, res) {
-        Report.findOne({ '_id': req.params.id }, function (err, issue) {
+        Report.findOne({ '_id': req.params.id }, function (err, report) {
             if (!err) {
 
                 var description = req.body.description;
@@ -91,24 +91,16 @@ var reportRepo = {
                 var dateUpdated = req.body.dateUpdated;
                 var issues = req.body.issues;
 
-                if (streetName)
-                    issue.streetName = streetName;
-                if (houseNumber)
-                    issue.houseNumber = houseNumber;
-                if (postalCode)
-                    issue.postalCode = postalCode;
-                if (place)
-                    issue.place = place;
                 if (description)
-                    issue.description = description;
-                if (latitude)
-                    issue.latitude = latitude;
-                if (longitude)
-                    issue.longitude = longitude;
-                if(dateresolved)
-                    issue.dateresolved = dateresolved;
+                    report.description = description;
+                if (status)
+                    report.status = status;
+                if (dateUpdated)
+                    report.dateUpdated = dateUpdated;
+                if (issues)
+                    report.issues = issues;
 
-                issue.save((err) => {
+                report.save((err) => {
                     if (err) {
                         res.status(500);
                         return res.send({
@@ -117,7 +109,7 @@ var reportRepo = {
                         });
                     }
                     res.status(201);
-                    return res.json(issue);
+                    return res.json(report);
                 });
             }
         })
