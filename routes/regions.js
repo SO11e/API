@@ -75,5 +75,40 @@ module.exports = function(app) {
 	 */
     app.get('/regions', regionRepo.getall);
 
- 
+/**
+ * @swagger
+ * /regions/:id:
+ *   put:
+ *     tags:
+ *       - Region
+ *     description: Updates a region
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         description: Region id
+ *         in: path
+ *         required: true
+ *         type: integer
+ *       - name: region
+ *         description: Region object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/region' 
+ *       - name: bearer
+ *         in: header
+ *         description: Token to determine which user is logged in
+ *         required: false
+ *         type: string
+ *         format: string
+ *     responses:
+ *       200:
+ *         description: Region updated
+ *         schema:
+ *           $ref: '#/definitions/region'
+ *       500:
+ *         description: Internal server error Region not updated
+*/
+    app.put('/regions/:id', regionRepo.update);
 }

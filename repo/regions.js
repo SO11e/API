@@ -57,6 +57,38 @@ var regionRepo = {
         })
     },
 
+    update: function(req,res){
+        Region.findOne({ '_id': req.params.id }, function (err, region) {
+            if (!err) {
+
+                var name = req.body.name;
+                var manager = req.body.manager;
+                var isActive = req.body.isActive;
+                var postalCodes = req.body.postalCodes;
+
+                if (name)
+                    region.name = name;
+                if (manager)
+                    region.manager = manager;
+                if (postalCodes)
+                    region.postalCodes = postalCodes;
+                if (isActive)
+                    region.isActive = isActive;
+
+                region.save((err) => {
+                    if (err) {
+                        res.status(500);
+                        return res.send({
+                            "status": 500,
+                            "error": err
+                        });
+                    }
+                    res.status(201);
+                    return res.json(region);
+                });
+            }
+        })
+    }
 }
 
 module.exports = regionRepo;
