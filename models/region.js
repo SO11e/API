@@ -31,7 +31,7 @@ console.log('Initializing region schema')
 var regionSchema = mongoose.Schema({
     name : {type: String, required: true},
     manager : { type: mongoose.Schema.Types.ObjectId, ref: "User", required:true },
-    isActive : { type: Boolean, required: true },
+    isActive : { type: Boolean, required: true, default: true },
     postalCodes : [{type: String, required:true}],
 });
 
