@@ -45,8 +45,7 @@ console.log('Initializing user schema')
 	 *         type: string
 	 *       user:
 	 *         type: object
-	 *         items:
-	 *           $ref: '#/definitions/user'
+	 *         $ref: '#/definitions/user'
 	*/
 
 // define the schema for our user model
