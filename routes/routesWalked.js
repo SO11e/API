@@ -91,6 +91,20 @@ module.exports = function(app) {
  *         required: true
  *         type: string
  *         format: ObjectId
+ *       - name: perPage
+ *         in: query
+ *         description: Integer that defines the amount of items per page (default = 10)
+ *         required: false
+ *         type: integer
+ *         format: integer
+ *         default: 10
+ *       - name: page
+ *         in: query
+ *         description: Integer that defines the page that has to be displayed (default = 0)
+ *         required: false
+ *         type: integer
+ *         format: integer
+ *         default: 0
  *       - name: bearer
  *         in: header
  *         description: Token to determine which user is logged in
