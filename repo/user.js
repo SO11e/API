@@ -16,7 +16,9 @@ var userRepo = {
             // all is well, return user
             else
                 var token = user.encode(user);
-            return res.send(token);
+
+            user.password = undefined;
+            return res.send({"token":token, "user":user});
         });
 
 
