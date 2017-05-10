@@ -15,10 +15,24 @@ console.log('Initializing user schema')
 	 *       - email
 	 *       - password
 	 *       - roles
+	 *       - firstname
+	 *       - lastname
 	 *     properties:
 	 *       email:
 	 *         type: string
 	 *       password:
+	 *         type: string
+	 *       firstname:
+	 *         type: string
+	 *       lastname:
+	 *         type: string
+	 *       street:
+	 *         type: string
+	 *       housenumber:
+	 *         type: string
+	 *       zipcode:
+	 *         type: string
+	 *       city:
 	 *         type: string
      *       region:
      *         type: string
@@ -76,6 +90,7 @@ userSchema.statics.validToken = function (token, callback) {
 			this.findOne({ '_id': decoded._id }, function (err, user) {
 				if (!err) {
 					if (user.email == decoded.email && user.password == decoded.password) {
+						user.password = undefined;
 						callback(null, user);
 					}
 					else {
