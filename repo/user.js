@@ -142,7 +142,6 @@ var userRepo = {
                     var updateSelf = postingUser._id == req.params.id;
 
                     if (updateSelf || isAdmin) {
-                        console.log('??')
                         User.findOne({ '_id': req.params.id }, function (err, user) {
                             if (!err) {
                                 var localemail = req.body.email;
