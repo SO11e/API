@@ -36,8 +36,6 @@ var issueRepo = {
             if (!err) {
                 var json = [];
                 data.forEach(function (item, key) {
-                    //TODO: niet te strikt nemen!
-
                     var thing = item;
                     json.push(thing);
                 })
@@ -60,6 +58,35 @@ var issueRepo = {
         });
     },
 
+    getbyregion: function (req, res) {
+        var perPage = 10;
+        var page = 0 * perPage;
+
+        if (req.query.perPage != null) {
+            perPage = parseInt(req.query.perPage);
+            console.log(req.query.perPage + ' perPage');
+        }
+        if (req.query.page != null) {
+            page = parseInt(req.query.page * perPage);
+            console.log(req.query.page + ' page');
+        }
+
+        Issue.find({ region: req.params.regionid }).limit(perPage).skip(page).exec(function (err, data) {
+            if (!err) {
+                var json = [];
+                data.forEach(function (item, key) {
+                    var thing = item;
+                    json.push(thing);
+                })
+
+                return res.send({ "page": page, "perPage": perPage, "data": json, });
+            } else {
+                return res.send(400, err);
+            }
+        })
+
+    },
+
     delete: function (req, res) {
         Issue.remove({ '_id': req.params.id }, function (err) {
             if (err) {
@@ -79,8 +106,10 @@ var issueRepo = {
 
                 var streetName = req.body.streetName;
                 var houseNumber = req.body.houseNumber;
-                var postalCode = req.body.postalCode;
-                var place = req.body.place;
+                var zipCode = req.body.zipCode;
+                var city = req.body.city;
+                var region = req.body.region;
+                var status = req.body.status;
                 var description = req.body.description;
                 var latitude = req.body.latitude;
                 var longitude = req.body.longitude;
@@ -90,10 +119,14 @@ var issueRepo = {
                     issue.streetName = streetName;
                 if (houseNumber)
                     issue.houseNumber = houseNumber;
-                if (postalCode)
-                    issue.postalCode = postalCode;
-                if (place)
-                    issue.place = place;
+                if (zipCode)
+                    issue.zipCode = zipCode;
+                if (city)
+                    issue.city = city;
+                if (region)
+                    issue.region = region;
+                if (status)
+                    issue.status = status;
                 if (description)
                     issue.description = description;
                 if (latitude)
