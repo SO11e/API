@@ -38,9 +38,25 @@ var userRepo = {
                 // create the user
                 var newUser = new User();
 
+                var street = req.body.street;
+                var housenumber = req.body.housenumber;
+                var zipcode = req.body.zipcode;
+                var city = req.body.city;
+
                 newUser.email = req.body.email;
                 newUser.password = newUser.generateHash(req.body.password);
                 newUser.region = req.body.region;
+                newUser.firstname = req.body.firstname;
+                newUser.lastname = req.body.lastname;
+
+                if (street)
+                    newUser.street = street;
+                if (housenumber)
+                    newUser.housenumber = housenumber;
+                if (zipcode)
+                    newUser.zipcode = zipcode;
+                if (city)
+                    newUser.city = city;
 
                 if (req.body.roles)
                     newUser.roles = req.body.roles;
@@ -69,17 +85,11 @@ var userRepo = {
             console.log(req.query.page + ' page');
         }
 
-        User.find().limit(perPage).skip(page).exec(function (err, data) {
+        User.find({}, '-password').limit(perPage).skip(page).exec(function (err, data) {
             if (!err) {
                 var json = [];
                 data.forEach(function (item, key) {
-                    var thing = {
-                        _id : item._id,
-                        email : item.email,
-                        region : item.region,
-                        roles : item.roles
-                    };
-                    json.push(thing);
+                    json.push(item);
                 })
 
                 return res.send({ "page": page, "perPage": perPage, "data": json, });
@@ -111,15 +121,7 @@ var userRepo = {
         if (token) {
             User.validToken(token, function (err, user) {
                 if (!err) {
-                     var thing = {
-                        _id : user._id,
-                        email : user.email,
-                        region : user.region,
-                        roles : user.roles,
-                        __v : user.__v
-                    };
-
-                    return res.send(thing);
+                    return res.send(user);
                 }
                 else {
                     return res.send(err);
@@ -146,6 +148,14 @@ var userRepo = {
                             if (!err) {
                                 var localemail = req.body.email;
                                 var localpassword = req.body.password;
+
+                                var firstname = req.body.firstname;
+                                var lastname = req.body.lastname;
+                                var street = req.body.street;
+                                var housenumber = req.body.housenumber;
+                                var zipcode = req.body.zipcode;
+                                var city = req.body.city;
+
                                 if (isAdmin){
                                     var localregion = req.body.region;
                                     var localroles = req.body.roles;
@@ -156,6 +166,20 @@ var userRepo = {
                                     user.email = localemail;
                                 if (localpassword)
                                     user.password = user.generateHash(localpassword);
+                                
+                                if (firstname)
+                                    user.firstname = firstname;
+                                if (lastname)
+                                    user.lastname = lastname;
+                                if (street)
+                                    user.street = street;
+                                if (housenumber)
+                                    user.housenumber = housenumber;
+                                if (zipcode)
+                                    user.zipcode = zipcode;
+                                if (city)
+                                    user.city = city;
+
                                 if (isAdmin && localregion)
                                     user.region = localregion;
                                 if (isAdmin && localroles)
