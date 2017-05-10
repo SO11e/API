@@ -107,6 +107,50 @@ module.exports = function(app) {
 
  /**
  * @swagger
+ * /issues/region/:regionid:
+ *   get:
+ *     tags:
+ *       - Issues
+ *     description: Get all issues by region ID
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: regionid
+ *         in: path
+ *         description: ID of issues in region that needs to be fetched
+ *         required: true
+ *         type: string
+ *         format: ObjectId
+ *       - name: perPage
+ *         in: query
+ *         description: Integer that defines the amount of items per page (default = 10)
+ *         required: false
+ *         type: integer
+ *         format: integer
+ *         default: 10
+ *       - name: page
+ *         in: query
+ *         description: Integer that defines the page that has to be displayed (default = 0)
+ *         required: false
+ *         type: integer
+ *         format: integer
+ *         default: 0
+ *       - name: bearer
+ *         in: header
+ *         description: Token to determine which user is logged in
+ *         required: false
+ *         type: string
+ *         format: string
+ *     responses:
+ *       200: 
+ *         description: issues returned
+ *         schema:
+ *           $ref: '#/definitions/issue'
+ */
+    app.get('/issues/region/:regionid', issuesRepo.getbyregion);
+
+ /**
+ * @swagger
  * /issues/:id:
  *   delete:
  *     tags:
