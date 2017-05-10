@@ -58,6 +58,35 @@ var issueRepo = {
         });
     },
 
+    getbyregion: function (req, res) {
+        var perPage = 10;
+        var page = 0 * perPage;
+
+        if (req.query.perPage != null) {
+            perPage = parseInt(req.query.perPage);
+            console.log(req.query.perPage + ' perPage');
+        }
+        if (req.query.page != null) {
+            page = parseInt(req.query.page * perPage);
+            console.log(req.query.page + ' page');
+        }
+
+        Issue.find({ region: req.params.regionid }).limit(perPage).skip(page).exec(function (err, data) {
+            if (!err) {
+                var json = [];
+                data.forEach(function (item, key) {
+                    var thing = item;
+                    json.push(thing);
+                })
+
+                return res.send({ "page": page, "perPage": perPage, "data": json, });
+            } else {
+                return res.send(400, err);
+            }
+        })
+
+    },
+
     delete: function (req, res) {
         Issue.remove({ '_id': req.params.id }, function (err) {
             if (err) {
