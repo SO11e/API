@@ -38,7 +38,15 @@ console.log('Initializing user schema')
      *         type: string
      *       roles:
      *         type: string
-	 * 
+	 *   login:
+	 *     type: object
+	 *     properties:
+	 *       token:
+	 *         type: string
+	 *       user:
+	 *         type: object
+	 *         items:
+	 *           $ref: '#/definitions/user'
 	*/
 
 // define the schema for our user model

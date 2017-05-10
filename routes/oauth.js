@@ -160,11 +160,13 @@ module.exports = function (app) {
 	 *         required: true
 	 *     responses:
 	 *       200:
-	 *         description: Returns token 
+	 *         description: Returns token and user
+	 *         schema:
+	 *           $ref: '#/definitions/login'
 	 *       400:
 	 *         description: User failed logging in
 	 *       500:
-		 *         description: Internal server error user not logged in
+	 *         description: Internal server error user not logged in
 	 */
 	app.post('/login', userRepo.localLogin);
 
