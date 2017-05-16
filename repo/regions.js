@@ -42,7 +42,7 @@ var regionRepo = {
             console.log(req.query.page + ' page');
         }
 
-        Region.find().limit(perPage).skip(page).exec(function (err, data) {
+        Region.find().populate('manager').limit(perPage).skip(page).exec(function (err, data) {
             if (!err) {
                 var json = [];
                 data.forEach(function (item, key) {
