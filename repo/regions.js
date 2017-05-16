@@ -46,6 +46,7 @@ var regionRepo = {
             if (!err) {
                 var json = [];
                 data.forEach(function (item, key) {
+                    item.manager.password = undefined;
                     var thing = item;
                     json.push(thing);
                 })
