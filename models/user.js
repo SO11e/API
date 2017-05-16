@@ -61,7 +61,7 @@ var userSchema = mongoose.Schema({
 	zipcode: { type: String },
 	city: { type: String },
 
-	region       : { type: mongoose.Schema.Types.ObjectId, ref: "Region", required:true },
+	region: { type: mongoose.Schema.Types.ObjectId, ref: "Region", required:true },
 	roles: { type: String, required: true, default: 'user' },
 
 });
@@ -94,7 +94,8 @@ userSchema.statics.validToken = function (token, callback) {
 		try {
 			var decoded = jwt.decode(token, secret.secret);
 
-			this.findOne({ '_id': decoded._id }, function (err, user) {
+			this.findOne({ '_id': decoded._id }).populate('region')
+            .exec(function (err, user) {
 				if (!err) {
 					if (user.email == decoded.email && user.password == decoded.password) {
 						user.password = undefined;

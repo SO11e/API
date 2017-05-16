@@ -5,20 +5,22 @@ var secret = require('../config/secret');
 
 var userRepo = {
     localLogin: function (req, res, next) {
-        User.findOne({ 'email': req.body.email }, function (err, user) {
-            // if there are any errors, return the error
-            if (err)
-                return res.send(500, err);
+        User.findOne({ 'email': req.body.email })
+            .populate('region')
+            .exec(function (err, user) {
+                // if there are any errors, return the error
+                if (err)
+                    return res.send(500, err);
 
-            // if no user is found, return the message
-            if (!user || !user.validPassword(req.body.password))
-                return res.send(400, { "msg": "Something went wrong, try again" })
-            // all is well, return user
-            else
-                var token = user.encode(user);
+                // if no user is found, return the message
+                if (!user || !user.validPassword(req.body.password))
+                    return res.send(400, { "msg": "Something went wrong, try again" })
+                // all is well, return user
+                else
+                    var token = user.encode(user);
 
-            user.password = undefined;
-            return res.send({"token":token, "user":user});
+                user.password = undefined;
+                return res.send({"token":token, "user":user});
         });
 
 
@@ -87,7 +89,8 @@ var userRepo = {
             console.log(req.query.page + ' page');
         }
 
-        User.find({}, '-password').limit(perPage).skip(page).exec(function (err, data) {
+        User.find({}, '-password').populate('region')
+            .limit(perPage).skip(page).exec(function (err, data) {
             if (!err) {
                 var json = [];
                 data.forEach(function (item, key) {
