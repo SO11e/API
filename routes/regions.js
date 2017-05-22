@@ -78,6 +78,36 @@ module.exports = function(app) {
 /**
  * @swagger
  * /regions/:id:
+ *   get:
+ *     tags:
+ *       - Region
+ *     description: Get one region by ID
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: ID
+ *         in: path
+ *         description: ID of region that needs to be fetched
+ *         required: true
+ *         type: string
+ *         format: string
+ *       - name: bearer
+ *         in: header
+ *         description: Token to determine which user is logged in
+ *         required: false
+ *         type: string
+ *         format: string
+ *     responses:
+ *       200: 
+ *         description: Region returned
+ *         schema:
+ *           $ref: '#/definitions/region'
+ */
+    app.get('/regions/:id', regionRepo.readsingle);
+
+/**
+ * @swagger
+ * /regions/:id:
  *   put:
  *     tags:
  *       - Region
