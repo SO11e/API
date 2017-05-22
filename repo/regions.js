@@ -57,6 +57,17 @@ var regionRepo = {
         })
     },
 
+    readsingle: function (req, res) {
+        Region.findOne({ '_id': req.params.id }).populate('manager').exec(function (err, region) {
+            if (!err) {
+                return res.send(region);
+            }
+            else {
+                return res.send(400);
+            }
+        });
+    },
+
     update: function(req,res){
         Region.findOne({ '_id': req.params.id }, function (err, region) {
             if (!err) {
