@@ -14,14 +14,20 @@ console.log('Initializing issue schema')
      *       - dateCreated
      *       - latitude
      *       - longitude
+     *       - region
+     *       - status
 	 *     properties:
 	 *       streetName:
 	 *         type: string
 	 *       houseNumber:
      *         type: string
-     *       postalCode:
+     *       zipCode:
      *         type: string
-     *       place:
+     *       city:
+     *         type: string
+     *       region:
+     *         type: string
+     *       status:
      *         type: string
      *       description:
      *         type: string
