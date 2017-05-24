@@ -14,9 +14,9 @@ var issueRepo = {
                     "error": err
                 })
             }
+            return res.json(issue);
         });
         //res.status(201);
-        return res.json(issue);
     },
 
     getall: function (req, res) {
@@ -32,7 +32,7 @@ var issueRepo = {
             console.log(req.query.page + ' page');
         }
 
-        Issue.find().limit(perPage).skip(page).exec(function (err, data) {
+        Issue.find().limit(perPage).skip(page).populate('region').exec(function (err, data) {
             if (!err) {
                 var json = [];
                 data.forEach(function (item, key) {
@@ -48,9 +48,9 @@ var issueRepo = {
     },
 
     readsingle: function (req, res) {
-        Issue.findOne({ '_id': req.params.id }, function (err, polish) {
+        Issue.findOne({ '_id': req.params.id }).populate('region').exec(function (err, issue) {
             if (!err) {
-                return res.send(polish);
+                return res.send(issue);
             }
             else {
                 return res.send(400);
