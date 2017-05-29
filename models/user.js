@@ -18,6 +18,7 @@ console.log('Initializing user schema')
 	 *       - firstname
 	 *       - lastname
 	 *       - active
+	 *       - region
 	 *     properties:
 	 *       email:
 	 *         type: string

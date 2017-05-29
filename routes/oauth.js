@@ -176,7 +176,7 @@ module.exports = function (app) {
 	 * /users:
 	 *   post:
 	 *     tags:
-	 *       - users
+	 *       - User
 	 *     description: Signs up User
 	 *     produces:
 	 *       - application/json
