@@ -3,9 +3,9 @@ var Issue = mongoose.model('Issue');
 
 var issueRepo = {
     create: function (req, res) {
-        var issue = new Issue(req.body);
+        var issue = new Issue(req.body);    
         console.log(issue);
-        
+
         issue.save((err) => {
             if (err) {
                 console.log('ERROR');
@@ -15,9 +15,10 @@ var issueRepo = {
                     "error": err
                 })
             }
+            res.status(201);
             return res.json(issue);
         });
-        //res.status(201);
+        
     },
 
     getall: function (req, res) {
