@@ -144,7 +144,7 @@ var issueRepo = {
                             "error": err
                         });
                     }
-                    res.status(201);
+                    res.status(200);
                     return res.json(issue);
                 });
             }
