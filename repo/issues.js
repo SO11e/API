@@ -4,7 +4,7 @@ var Issue = mongoose.model('Issue');
 var issueRepo = {
     create: function (req, res) {
         var issue = new Issue(req.body);
-        console.log("");
+        console.log(issue);
         issue.save((err) => {
             if (err) {
                 console.log('ERROR');
