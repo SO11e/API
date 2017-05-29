@@ -17,6 +17,7 @@ console.log('Initializing user schema')
 	 *       - roles
 	 *       - firstname
 	 *       - lastname
+	 *       - active
 	 *     properties:
 	 *       email:
 	 *         type: string
@@ -38,6 +39,8 @@ console.log('Initializing user schema')
      *         type: string
      *       roles:
      *         type: string
+	 *       active:
+	 *         type: boolean
 	 *   login:
 	 *     type: object
 	 *     properties:
@@ -63,6 +66,7 @@ var userSchema = mongoose.Schema({
 
 	region: { type: mongoose.Schema.Types.ObjectId, ref: "Region", required:true },
 	roles: { type: String, required: true, default: 'user' },
+	active: { type: Boolean, required: true, default: true },
 
 });
 

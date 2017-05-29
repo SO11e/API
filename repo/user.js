@@ -184,6 +184,8 @@ var userRepo = {
                                     user.zipcode = zipcode;
                                 if (city)
                                     user.city = city;
+                                if (active)
+                                    user.active = active;
 
                                 if (isAdmin && localregion)
                                     user.region = localregion;
