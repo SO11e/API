@@ -13,7 +13,7 @@ var userRepo = {
                     return res.send(500, err);
 
                 // if no user is found, return the message
-                if (!user || !user.validPassword(req.body.password))
+                if (!user || !user.validPassword(req.body.password) || !user.active)
                     return res.send(400, { "msg": "Something went wrong, try again" })
                 // all is well, return user
                 else
@@ -160,6 +160,7 @@ var userRepo = {
                                 var housenumber = req.body.housenumber;
                                 var zipcode = req.body.zipcode;
                                 var city = req.body.city;
+                                var active = req.body.active;
 
                                 if (isAdmin){
                                     var localregion = req.body.region;
@@ -184,6 +185,8 @@ var userRepo = {
                                     user.zipcode = zipcode;
                                 if (city)
                                     user.city = city;
+                                if (active && isAdmin)
+                                    user.active = active;
 
                                 if (isAdmin && localregion)
                                     user.region = localregion;
