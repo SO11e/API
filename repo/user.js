@@ -20,8 +20,8 @@ var userRepo = {
                     var token = user.encode(user);
 
                 user.password = undefined;
-                return res.send({"token":token, "user":user});
-        });
+                return res.send({ "token": token, "user": user });
+            });
 
 
     },
@@ -76,7 +76,7 @@ var userRepo = {
         });
     },
 
-    getUsers: function(req,res){
+    getUsers: function (req, res) {
         var perPage = 10;
         var page = 0 * perPage;
 
@@ -91,17 +91,17 @@ var userRepo = {
 
         User.find({}, '-password').populate('region')
             .limit(perPage).skip(page).exec(function (err, data) {
-            if (!err) {
-                var json = [];
-                data.forEach(function (item, key) {
-                    json.push(item);
-                })
+                if (!err) {
+                    var json = [];
+                    data.forEach(function (item, key) {
+                        json.push(item);
+                    })
 
-                return res.send({ "page": page, "perPage": perPage, "data": json, });
-            } else {
-                throw err;
-            }
-        })
+                    return res.send({ "page": page, "perPage": perPage, "data": json, });
+                } else {
+                    throw err;
+                }
+            })
     },
 
     getUser: function (req, res) {
@@ -118,6 +118,30 @@ var userRepo = {
         }
         else {
             return res(400);
+        }
+    },
+
+    getSingleUser: function (req, res) {
+        var token = req.header('bearer');
+
+        var postingUser = null;
+        if (token) {
+            User.validToken(token, function (err, user) {
+                if (!err) {
+                    postingUser = user;
+                    var isAdmin = postingUser.roles == 'admin';
+                    if (isAdmin) {
+                        User.findOne({ '_id': req.params.id }).exec(function (err, user) {
+                            if (!err) {
+                                return res.send(user);
+                            }
+                            else {
+                                return res.send(400);
+                            }
+                        });
+                    }
+                }
+            })
         }
     },
 
@@ -162,17 +186,17 @@ var userRepo = {
                                 var city = req.body.city;
                                 var active = req.body.active;
 
-                                if (isAdmin){
+                                if (isAdmin) {
                                     var localregion = req.body.region;
                                     var localroles = req.body.roles;
                                 }
-                                    
+
 
                                 if (localemail)
                                     user.email = localemail;
                                 if (localpassword)
                                     user.password = user.generateHash(localpassword);
-                                
+
                                 if (firstname)
                                     user.firstname = firstname;
                                 if (lastname)
