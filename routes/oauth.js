@@ -241,4 +241,37 @@ module.exports = function (app) {
 	 */
 	app.put('/users/:id', userRepo.update);
 
+	/**
+	 * @swagger
+	  * /users/:id:
+	  *   get:
+	  *     tags:
+	  *       - User
+	  *     description: Gets a single user 
+	  *     produces: 
+	  *       - application/json
+	  *     parameters:
+	  *       - name: id
+	  *         description: User id
+	  *         in: path
+	  *         required: true
+	  *         type: integer
+	  *       - name: bearer
+	  *         in: header
+	  *         description: Token to determine which user is logged in
+	  *         required: true
+	  *         type: string
+	  *         format: string
+	  *     responses:
+	  *       200:
+	  *         description: Returns the user
+	  *         schema:
+	  *           $ref: '#/definitions/login'
+	  *       400:
+	  *         description: Token doesn't exist or rights are not right
+	  *       500:
+	  *         description: Internal server error user not returned
+	 */
+	app.get('/users/:id', userRepo.getSingleUser);
+
 };
