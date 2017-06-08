@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Report = mongoose.model('Report');
 var User = mongoose.model('User');
+var Issue = mongoose.model('Issue');
 
 var reportRepo = {
     create: function (req, res) {
@@ -43,10 +44,11 @@ var reportRepo = {
             console.log(req.query.page + ' page');
         }
 
-        Report.find().limit(perPage).skip(page).exec(function (err, data) {
+        Report.find().populate('issues').limit(perPage).skip(page).exec(function (err, data) {
             if (!err) {
                 var json = [];
                 data.forEach(function (item, key) {
+                    console.log(item);
                     var thing = item;
                     json.push(thing);
                 })
@@ -55,11 +57,11 @@ var reportRepo = {
             } else {
                 throw err;
             }
-        })
+        });
     },
 
     readsingle: function (req, res) {
-        Report.findOne({ '_id': req.params.id }, function (err, report) {
+        Report.findOne({ '_id': req.params.id }).populate('issues').exec(function (err, report) {
             if (!err) {
                 return res.send(report);
             }
