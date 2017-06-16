@@ -44,7 +44,7 @@ var reportRepo = {
             console.log(req.query.page + ' page');
         }
 
-        Report.find().populate('issues').limit(perPage).skip(page).exec(function (err, data) {
+        Report.find().populate(['issues', 'createdBy']).limit(perPage).skip(page).exec(function (err, data) {
             if (!err) {
                 var json = [];
                 data.forEach(function (item, key) {
@@ -61,7 +61,7 @@ var reportRepo = {
     },
 
     readsingle: function (req, res) {
-        Report.findOne({ '_id': req.params.id }).populate('issues').exec(function (err, report) {
+        Report.findOne({ '_id': req.params.id }).populate(['issues', 'createdBy']).exec(function (err, report) {
             if (!err) {
                 return res.send(report);
             }
