@@ -43,7 +43,7 @@ module.exports = function(app) {
 	 *   get:
 	 *     tags:
 	 *       - Issues
-	 *     description: Gets all the issues paginated
+	 *     description: Gets all the issues paginated,  you will get the issues with pagiantion
 	 *     produces:
 	 *       - application/json
 	 *     parameters:
@@ -81,7 +81,7 @@ module.exports = function(app) {
  *   get:
  *     tags:
  *       - Issues
- *     description: Get one issue by ID
+ *     description: Get one issue by ID, you will also get the fullimage path
  *     produces:
  *       - application/json
  *     parameters:
