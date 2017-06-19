@@ -41,6 +41,10 @@ console.log('Initializing issue schema')
      *         type: number      
      *       longitude:
      *         type: number
+     *       thumbnail:
+     *         type: string
+     *       fullimage:
+     *         type: string
 	*/
 
 // define the schema for our issue model
@@ -57,6 +61,8 @@ var issueSchema = mongoose.Schema({
     dateResolved : Date, 
     latitude : {type: Number, required: true},
     longitude : {type: Number, required: true},
+    thumbnail : {type: String},
+    fullimage : {type: String},
 
 });
 

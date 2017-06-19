@@ -38,6 +38,7 @@ var issueRepo = {
             if (!err) {
                 var json = [];
                 data.forEach(function (item, key) {
+                    item.fullimage = undefined;
                     var thing = item;
                     json.push(thing);
                 })
@@ -52,6 +53,7 @@ var issueRepo = {
     readsingle: function (req, res) {
         Issue.findOne({ '_id': req.params.id }).populate('region').exec(function (err, issue) {
             if (!err) {
+                issue.thumbnail = undefined;
                 return res.send(issue);
             }
             else {
@@ -116,6 +118,8 @@ var issueRepo = {
                 var latitude = req.body.latitude;
                 var longitude = req.body.longitude;
                 var dateresolved = req.body.dateresolved;
+                var thumbnail = req.body.thumbnail;
+                var fullimage = req.body.fullimage;
 
                 if (streetName)
                     issue.streetName = streetName;
@@ -137,6 +141,10 @@ var issueRepo = {
                     issue.longitude = longitude;
                 if(dateresolved)
                     issue.dateresolved = dateresolved;
+                if(thumbnail)
+                    issue.thumbnail = thumbnail;
+                if(fullimage)
+                    issue.fullimage = req.body.fullimage;
 
                 issue.save((err) => {
                     if (err) {
