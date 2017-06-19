@@ -79,6 +79,7 @@ var issueRepo = {
             if (!err) {
                 var json = [];
                 data.forEach(function (item, key) {
+                    item.fullimage = undefined;
                     var thing = item;
                     json.push(thing);
                 })
@@ -144,7 +145,7 @@ var issueRepo = {
                 if(thumbnail)
                     issue.thumbnail = thumbnail;
                 if(fullimage)
-                    issue.fullimage = req.body.fullimage;
+                    issue.fullimage = fullimage;
 
                 issue.save((err) => {
                     if (err) {
